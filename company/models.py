@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import now
+
 
 # Create your models here.
 
@@ -48,6 +50,21 @@ class Company(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)  # Set when created
     updated_at = models.DateTimeField(auto_now=True)  # Updates on every save
     
+    
 
     def __str__(self):
         return f"{self.company_name} - By:{self.user.username}"
+
+
+class Appointment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    company = models.ForeignKey(Company, on_delete=models.CASCADE)
+    date = models.DateField(null=True, blank=True)
+    follow = models.BooleanField(default=False)
+    note = models.TextField(null=True, blank=True)
+    created_at = models.DateTimeField(default=now, editable=False)
+
+    def __str__(self):
+        
+        return f"{self.user.username} - {self.company.company_name} - {self.date}"
+    
