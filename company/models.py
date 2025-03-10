@@ -20,15 +20,15 @@ class Company(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     company_name = models.CharField(max_length=255, unique=True, null=True, blank=True)
-    company_website = models.CharField(max_length=255, unique=True, null=True, blank=True)
-    company_email = models.CharField(max_length=255, unique=True, null=True, blank=True)
-    company_linkedin = models.CharField(max_length=255, unique=True, null=True, blank=True)
-    company_facebook = models.CharField(max_length=255, unique=True, null=True, blank=True)
-    company_twitter = models.CharField(max_length=255, unique=True, null=True, blank=True)
+    company_website = models.CharField(max_length=255, null=True, blank=True)
+    company_email = models.CharField(max_length=255, null=True, blank=True)
+    company_linkedin = models.CharField(max_length=255, null=True, blank=True)
+    company_facebook = models.CharField(max_length=255, null=True, blank=True)
+    company_twitter = models.CharField(max_length=255, null=True, blank=True)
 
-    person_name = models.CharField(max_length=255, unique=True, null=True, blank=True)
-    person_linked = models.CharField(max_length=255, unique=True, null=True, blank=True)
-    person_email = models.CharField(max_length=255, unique=True, null=True, blank=True)
+    person_name = models.CharField(max_length=255, null=True, blank=True)
+    person_linked = models.CharField(max_length=255, null=True, blank=True)
+    person_email = models.CharField(max_length=255, null=True, blank=True)
     person_contact = models.CharField(max_length=20, null=True, blank=True)
 
     negotiate = models.BooleanField(default=False, null=True, blank=True)
