@@ -2,11 +2,12 @@ from rest_framework import serializers
 from .models import Company, Appointment
 
 class CompanySerializer(serializers.ModelSerializer):
-    user = serializers.CharField(source="user.username", read_only=True) 
+    user = serializers.CharField(source="user.username", read_only=True)
+    user_first_name = serializers.CharField(source = "user.first_name", read_only=True ) 
     class Meta:
         model = Company
         fields = '__all__'
-        read_only_fields = ["user", "created_at", "updated_at"]
+        read_only_fields = ["user", "user_first_name", "created_at", "updated_at"]
 
     def create(self, validated_data):
         request = self.context["request"]  # Get request context
@@ -15,11 +16,12 @@ class CompanySerializer(serializers.ModelSerializer):
 
 class AppointmentSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source="user.username", read_only=True)
+    user_first_name = serializers.CharField(source = "user.first_name", read_only=True ) 
     company = serializers.SerializerMethodField()
     class Meta:
         model = Appointment
         fields = '__all__'
-        read_only_fields = ["user"]
+        read_only_fields = ["user", "user_first_name"]
     
     def get_company(self, obj):
         return {
