@@ -28,6 +28,9 @@ class CompanyListCreateAPIView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    
+
+    
 
 class UserComaniesView(APIView):
     permission_classes = [IsAuthenticated]
@@ -36,6 +39,17 @@ class UserComaniesView(APIView):
         companies = Company.objects.filter(user=user).order_by("-created_at") 
         serializer = CompanySerializer(companies, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    def put(self, request, company_id):
+        company = get_object_or_404(Company, pk=company_id)
+        serializer = CompanySerializer(company, data=request.data, partial=True, context={"request": request})
+        print(serializer)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class AppointmentView(APIView):
