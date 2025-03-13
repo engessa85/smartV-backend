@@ -29,9 +29,6 @@ class CompanyListCreateAPIView(APIView):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     
-
-    
-
 class UserComaniesView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
@@ -78,3 +75,19 @@ class AppointmentView(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserDashBoardInfo(APIView):
+    permission_classes= [IsAuthenticated]
+    def get(self, request):
+        user = request.user
+        compnay_count = Company.objects.filter(user=user).count()
+        company_followed = Appointment.objects.filter(user=user, follow = True).count()
+        company_not_followed = Appointment.objects.filter(user=user, follow = False).count()
+        return Response({
+            "company_count": compnay_count,
+            "company_followed":company_followed,
+            "company_not_followed":company_not_followed,
+
+        }, status=status.HTTP_200_OK)
+    
