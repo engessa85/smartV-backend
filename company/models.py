@@ -63,6 +63,7 @@ class Appointment(models.Model):
     follow = models.BooleanField(default=False)
     note = models.TextField(null=True, blank=True)
     created_at = models.DateTimeField(default=now, editable=False)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         

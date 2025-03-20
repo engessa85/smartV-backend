@@ -76,6 +76,12 @@ class AppointmentView(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class AllAppointmentView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        appointments = Appointment.objects.all().order_by("-updated_at")
+        serializer = AppointmentSerializer(appointments, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class UserDashBoardInfo(APIView):
     permission_classes= [IsAuthenticated]
